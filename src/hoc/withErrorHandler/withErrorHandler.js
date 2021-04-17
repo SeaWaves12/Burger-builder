@@ -5,20 +5,21 @@ import Aux from '../Auxiliary';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
-        state = {
-            error: null
-        }
 
-        //componentwillMount is removed in this react version & since we are causing side effect we can use constructor
-        UNSAFE_componentWillMount() {
+        //componentwillMount is removed in this react version & since we are causing side effect we can use constructor or UNSAFE_componentWillMount with warning!!
+        constructor(props) {
+            super(props);
+            this.state = {
+                error: null
+            }
             this.reqInterceptor = axios.interceptors.request.use(req => {
-                this.setState({ ...this.state, error: null });
+                this.state = { error: null };
                 return req;
             });
             this.resInterceptor = axios.interceptors.response.use(res => res, err => {
-                this.setState({ error: err });
+                this.state = { error: err };
             });
-        };
+        }
 
         componentWillUnmount() {
             axios.interceptors.request.eject(this.reqInterceptor);

@@ -8,12 +8,12 @@ const navigationItems = (props) => {
     return(
         <ul className={classes.NavigationItems}>
             <NavigationItem
-                link='/' active >
+                link='/' exact >
                 Burger Builder
             </NavigationItem>
             <NavigationItem
-                link='/' >
-                Checkout
+                link='/orders' >
+                Orders
             </NavigationItem>
         </ul>
     );

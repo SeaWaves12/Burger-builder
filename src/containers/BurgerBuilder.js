@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from '../axios-orders';
 
 import Aux from "../hoc/Auxiliary";
 import Burger from '../components/Burger/Burger';
@@ -7,10 +8,6 @@ import Modal from '../components/UI/Modal/Modal';
 import OrderSummary from '../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../components/UI/Spinner/Spinner';
 import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
-
-import axios from '../axios-orders';
-
-
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -58,6 +55,8 @@ class BurgerBuilder extends Component {
     //
     purchaseContinueHandler = (props) => {
         //alert('you continue')
+        //
+        //this code goes to contactData.js
         // this.setState({ loading: true });
         // const order = {
         //     ingredients: this.state.ingredients,
@@ -85,6 +84,7 @@ class BurgerBuilder extends Component {
         for (let i in this.state.ingredients) {
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
         }
+        queryParams.push('price=' + this.state.totalPrice)
         const queryString = queryParams.join('&');
         this.props.history.push({
             pathname:'/checkout',
